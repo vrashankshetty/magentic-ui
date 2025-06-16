@@ -18,6 +18,11 @@ import { Trash2 } from "lucide-react";
 import { appContext } from "../../../hooks/provider";
 import { IPlanStep } from "../../types/plan";
 import AutoResizeTextarea from "../../common/AutoResizeTextarea";
+import { CoderIcon,FileSurferIcon,WebSurferIcon,UserIcon } from "../../common/Icon";
+
+
+
+
 
 // Debounce hook
 const useDebounce = (callback: Function, delay: number) => {
@@ -146,8 +151,20 @@ const PlanView: React.FC<PlanProps> = ({
     handlePlanChange(items);
   };
 
+
+const getAgentIcon = (agentName: string | undefined): JSX.Element => {
+  const lowerCaseName = (agentName || '').toLowerCase();
+  
+  if (lowerCaseName.includes('coder')) return <CoderIcon />;
+  if (lowerCaseName.includes('file') && lowerCaseName.includes('surfer')) return <FileSurferIcon />;
+  if (lowerCaseName.includes('web') && lowerCaseName.includes('surfer')) return <WebSurferIcon />;
+  if (lowerCaseName.includes('user')) return <UserIcon />;
+  return <UserIcon />;
+};
+
   const noop = () => {};
 
+  console.log("PlanView rendered with plan:", localPlan);
   return (
     <>
       {!viewOnly && onRegeneratePlan && (
@@ -220,6 +237,11 @@ const PlanView: React.FC<PlanProps> = ({
                               >
                                 Step {index + 1}
                               </span>
+                              <div className="flex items-center ml-2 relative group">
+                                  <div className="text-gray-600 dark:text-gray-300">
+                                    {getAgentIcon(item.agent_name)}
+                                  </div>
+                                </div>
                             </div>
                             <div className="border-transparent p-1  px-2 mt-2.5 flex-1 rounded">
                               <div className="flex items-center">
