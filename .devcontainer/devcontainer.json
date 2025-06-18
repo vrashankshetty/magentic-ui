@@ -1,0 +1,36 @@
+{
+  "name": "Magentic-UI Development",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    }
+  },
+  "forwardPorts": [8000, 8081, 6080, 37367],
+  "portsAttributes": {
+    "8000": {
+      "label": "Frontend Dev Server",
+      "onAutoForward": "openBrowser"
+    },
+    "8081": {
+      "label": "Magentic-UI Backend",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "pip install -e .[dev,azure,ollama] && docker pull mcr.microsoft.com/playwright:v1.41.1-jammy && cd frontend && npm install",
+  "postStartCommand": "echo '🚀 Environment ready! Run \"magentic ui --port 8081\" to start the server.'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  }
+}
